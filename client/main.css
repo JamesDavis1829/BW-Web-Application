@@ -1,0 +1,8 @@
+.navbar{
+    margin-bottom: 0;
+}
+.side{
+    position: fixed;
+    height: 100%;
+    background-color: grey;
+}

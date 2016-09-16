@@ -12,7 +12,7 @@ import "./profile.js";
 Template.body.onCreated(function bodyCreation(){
     this.state = new ReactiveDict();
     this.state.set("current","dashboard");
-    Meteor.subscribe("profile");
+    Meteor.subscribe("devicedata");
 });
 
 Template.body.helpers({

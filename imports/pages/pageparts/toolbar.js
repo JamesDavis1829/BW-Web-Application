@@ -5,17 +5,14 @@ import "./toolbar.html";
 
 Template.toolbar.helpers({
     userName(){
-        if(Meteor.user().emails !== undefined){
-            return Meteor.user().emails[0].address;
-        }else{
-            return "";
+        if(Meteor.userId() !== null) {
+            return Meteor.user().username;
         }
-
     }
 });
 
 Template.toolbar.events({
     "click .logout-user"(event){
-        Meteor.logout();
+       Meteor.logout();
     }
 });

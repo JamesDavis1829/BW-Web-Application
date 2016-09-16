@@ -2,13 +2,33 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="well">
-                <form class="username">
-                    <h2>Change your username</h2>
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">Username</span>
-                        <input type="text" class="form-control" placeholder="{{getName}}" aria-describedby="basic-addon1" name="name">
+                <form class="username-form">
+                    <h3 class="text-center">Change your Display Name</h3>
+                    <div class="form-group">
+                        <label for="InputNewUsername">Current Name: {{getname}}</label>
+                        <input type="text" class="form-control" placeholder="Enter new Display Name here" name="name">
                     </div>
+                    <button type="submit" class="btn btn-default btn-block">Change Name</button>
                     <div id="usernameCode"></div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            <div class="well">
+                <form class="addDeviceToProfile">
+                    <h3 class="text-center">Register a Device to your Profile</h3>
+                    <p>To register a device to your profile you must provide the device ID and the location at which the device will be placed.</p>
+                    <div class="form-group">
+                        <label for="InputNewUsername">Enter your Device ID:</label>
+                        <input type="text" class="form-control" placeholder="Enter the new Device ID here" name="devid">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            <div class="well">
+                <form class="createSubUser">
+                    <h3 class="text-center">Create a Sub User</h3>
                 </form>
             </div>
         </div>

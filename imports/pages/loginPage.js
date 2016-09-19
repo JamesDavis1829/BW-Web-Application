@@ -36,7 +36,7 @@ Template.loginpage.events({
     },
     "submit .registerForm"(event, instance){
         event.preventDefault();
-        const user = $("[name=regUser").val();
+        const user = $("[name=regUser]").val();
         const email = $("[name=regEmail]").val();
         const pass1 = $("[name=regPass1]").val();
         const pass2 = $("[name=regPass2]").val();
@@ -52,7 +52,8 @@ Template.loginpage.events({
                 profile : {
                     name : name,
                     devices : []
-                }
+                },
+                admin : true
             });
         }
     }

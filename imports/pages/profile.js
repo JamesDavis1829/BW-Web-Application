@@ -16,9 +16,18 @@ Template.profile.events({
         const target = event.target;
         const text = target.name.value;
 
-        const id = Meteor.userId();
-        Meteor.users.update({ _id : id },{ $set : { profile : { name : text} } });
+        Meteor.call("userData.updateName", text, Meteor.userId());
 
         target.name.value = "";
+    },
+    "submit .addDeviceToProfile"(event, instance){
+        event.preventDefault();
+
+        const target = event.target;
+        let text = target.devid.value;
+
+        Meteor.call("DeviceData.register",text);
+
+        target.devid.value = "";
     }
 });

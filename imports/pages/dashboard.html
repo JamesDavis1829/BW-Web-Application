@@ -1,4 +1,5 @@
 <template name="dashboard">
+    {{caller}}
     <div class="row">
         <div class="col-md-12">
             <div class="well">
@@ -7,12 +8,34 @@
         </div>
     </div>
     {{#each getLocations}}
-        <div class="row">
-            <div class="col-md-12 well">
-                <div class="col-md-4">
+        <div class="row" style="height : 110px">
+            <div class="col-md-12 well" style="height : 100%">
+                <div class="col-md-3">
                     <h2>{{this}}</h2>
+                </div>
+                <div class="col-md-3" style="height : 100%">
+                    <canvas id="{{getChartName this}}"></canvas>
+                </div>
+                <div id="table" class="col-md-6" style="height : 100%">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <td>Full Tanks</td>
+                            <td>Empty Tanks</td>
+                            <td>Total Tanks</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            {{#each getTanksTotals}}
+                                <td>{{this}}</td>
+                            {{/each}}
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     {{/each}}
+    {{render}}
 </template>

@@ -1,0 +1,37 @@
+<template name="dashboardRow">
+    {{#each location}}
+        <div class="row" style="height : 110px">
+            <div class="col-md-12 well" style="height : 100%">
+                <div class="col-md-3">
+                    <h2 class="locationLink" id="{{this}}">{{this}}</h2>
+                </div>
+                {{#let tanks=(getTanksTotals this)}}
+                    <div class="col-md-3" style="height : 100%">
+                        {{> doughnutChart location=this data=tanks}}
+                    </div>
+                    <div id="table" class="col-md-6" style="height : 100%">
+                        {{> dashTable data=tanks}}
+                    </div>
+                {{/let}}
+            </div>
+        </div>
+    {{/each}}
+</template>
+
+<template name="dashboardRowSingle">
+    <div class="row" style="height : 110px">
+        <div class="col-md-12 well" style="height : 100%">
+            <div class="col-md-3">
+                <h2>{{location}}</h2>
+            </div>
+            {{#let tanks=(getTanksTotals location)}}
+                <div class="col-md-3" style="height : 100%">
+                    {{> doughnutChart location=location data=tanks}}
+                </div>
+                <div id="table" class="col-md-6" style="height : 100%">
+                    {{> dashTable data=tanks}}
+                </div>
+            {{/let}}
+        </div>
+    </div>
+</template>

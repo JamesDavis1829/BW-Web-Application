@@ -1,3 +1,38 @@
 <template name="locations">
-    <p>The is the locations page {{test}}</p>
+    {{#let location=getLocations}}
+        {{#let cur=getCurrentLocation}}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="well">
+                        <h2 class="text-center">Select your location:
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Locations <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    {{#each location}}
+                                        <li><a href="#" class="setLocation" id="{{this}}">{{this}}</a></li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </h2>
+                        {{#if cur}}
+                            {{> dashboardRowSingle location=cur}}
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            {{#if cur}}
+                {{#each (getDevicesFromLocation cur)}}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="well">
+                                <p>{{this}}</p>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            {{/if}}
+        {{/let}}
+    {{/let}}
 </template>

@@ -2,7 +2,7 @@ import { Template } from "meteor/templating";
 import { ReactiveDict } from "meteor/reactive-dict";
 import { Meteor } from "meteor/meteor";
 import { Tracker } from "meteor/tracker";
-import { DeviceData }  from "../../imports/database/devicedata.js";
+import { ReactiveVar } from "meteor/reactive-var";
 
 import "./body.html";
 import "./pageparts/toolbar.js";
@@ -19,6 +19,7 @@ Tracker.autorun(function trackerRun(){
 
 Template.body.onCreated(function bodyCreation(){
     this.state = new ReactiveDict();
+    this.location = new ReactiveVar(null);
     this.state.set("current","dashboard");
     Meteor.subscribe("userData");
 });
@@ -26,18 +27,14 @@ Template.body.onCreated(function bodyCreation(){
 Template.body.helpers({
     currentPage(){
       return Template.instance().state.get("current");
-    },
-    pages : [
-        "Dashboard",
-        "Locations",
-        "Profile"
-    ]
+    }
 });
 
 Template.body.events({
     "click .page"(event, instance){
         instance.state.set("current", $(event.target).context.className.split(" ")[1].toLowerCase() );
+    },
+    "click .locationLink"(event, instance){
+        instance.state.set("current","locations");
     }
-
-
 });

@@ -1,7 +1,7 @@
 <body style="height : 100%">
     {{> toolbar pages=pages}}
     {{#if currentUser}}
-        {{> Template.dynamic template=currentPage }}
+        {{> Template.dynamic template=currentPage}}
     {{else}}
         {{> loginpage}}
     {{/if}}

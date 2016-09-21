@@ -5,14 +5,12 @@ import { getDistinct, getFullGasAmount } from "../../imports/database/dbcommands
 import { Tracker } from "meteor/tracker";
 import { ReactiveVar } from "meteor/reactive-var";
 import "./pageparts/toolbar.js";
+import "./pageparts/doughnutChart.js";
+import "./pageparts/dashTable.js";
 import "./dashboard.html";
 
 var limit = 20;
 var threshold = 0.2;
-var chartRenders = {};
-
-//suppresses debug from chartjs
-//console.log = function() {};
 
 function getDevicesFromLocation(location){
     let array = DeviceData.find({Location : {$eq : location}}).fetch();
@@ -43,56 +41,6 @@ function lastMonth(){
 }
 
 
-Template.dashboard.onCreated(function dashCreated(){
-    this.locations = new ReactiveVar([]);
-
-    this.autorun(function(){
-        let locs = Template.instance().locations.get();
-        for(let x in locs){
-            if(chartRenders[locs[x]] !== true){
-                let ctx = document.getElementById("chart"+locs[x]);
-                if(ctx !== null || ctx !== undefined) {
-                    //sets width and height of the canvas
-                    let $canvas = $("#chart" + locs[x]);
-                    let $parent = $canvas.parent();
-                    $canvas.height($parent.height());
-
-                    let data = {
-                        labels: [
-                            "Full",
-                            "Empty"
-                        ],
-                        datasets: [
-                            {
-                                data: getTotals(locs[x]),
-                                backgroundColor: [
-                                    "#36A2EB",
-                                    "#FF6384"
-                                ],
-                                hoverBackgroundColor: [
-                                    "#36A2EB",
-                                    "#FF6384"
-                                ]
-                            }],
-                    };
-                    let myChart = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: data,
-                        options: {
-                            maintainAspectRatio: false,
-                            legend: {
-                                display: false
-                            }
-                        }
-                    });
-                    chartRenders[locs[x]] = true;
-                }
-            }
-        }
-    });
-
-});
-
 Template.dashboard.helpers({
     user(){
        return Meteor.user().profile.name;
@@ -103,7 +51,6 @@ Template.dashboard.helpers({
     getLocations(){
         let array = DeviceData.find().fetch();
         array = getDistinct(array, "Location");
-        Template.instance().locations.set(array);
         return array;
     },
     getChartName(location){
@@ -112,7 +59,7 @@ Template.dashboard.helpers({
     getDivName(location){
         return "div" + location;
     },
-    getTanksTotals(){
+    getTanksTotals(location){
         let array = DeviceData.find({Location : {$eq : location}}).fetch();
         array = getDistinct(array, "DeviceID");
         let full = 0;
@@ -126,11 +73,8 @@ Template.dashboard.helpers({
                 empty++;
             }
         }
-        return [full, empty, full+empty];
+        return {"full" : full, "empty" : empty, "both" : full+empty};
     }
 
 });
 
-Template.dashboard.onDestroyed(function dashDestroyed(){
-    chartRenders = [];
-});

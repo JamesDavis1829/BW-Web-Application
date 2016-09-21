@@ -1,5 +1,4 @@
 <template name="dashboard">
-    {{caller}}
     <div class="row">
         <div class="col-md-12">
             <div class="well">
@@ -13,27 +12,14 @@
                 <div class="col-md-3">
                     <h2>{{this}}</h2>
                 </div>
-                <div class="col-md-3" style="height : 100%">
-                    <canvas id="{{getChartName this}}"></canvas>
-                </div>
-                <div id="table" class="col-md-6" style="height : 100%">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <td>Full Tanks</td>
-                            <td>Empty Tanks</td>
-                            <td>Total Tanks</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            {{#each getTanksTotals}}
-                                <td>{{this}}</td>
-                            {{/each}}
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                {{#let tanks=(getTanksTotals this)}}
+                    <div class="col-md-3" style="height : 100%">
+                        {{> doughnutChart location=this data=tanks}}
+                    </div>
+                    <div id="table" class="col-md-6" style="height : 100%">
+                        {{> dashTable data=tanks}}
+                    </div>
+                {{/let}}
             </div>
         </div>
     {{/each}}

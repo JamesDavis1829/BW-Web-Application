@@ -1,0 +1,41 @@
+<template name="doughnutChart">
+    <canvas id="{{location}}"></canvas>
+    <script>
+        //there is currently no way to access dynamic DOM in Meteor hacky method to work around that
+        setTimeout(function chartRender() {
+            let ctx = document.getElementById("{{location}}");
+            let $canvas = $("#{{location}}");
+            let $parent = $canvas.parent();
+            $canvas.height($parent.height());
+
+            let data = {
+            labels: [
+             "Full",
+             "Empty"
+            ],
+            datasets: [
+             {
+                 data: [{{data.full}},{{data.empty}}],
+                 backgroundColor: [
+                     "#36A2EB",
+                     "#FF6384"
+                 ],
+                 hoverBackgroundColor: [
+                     "#36A2EB",
+                     "#FF6384"
+                 ]
+             }],
+            };
+            let myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+            options: {
+             maintainAspectRatio: false,
+             legend: {
+                 display: false
+             }
+            }
+            });
+        },10)
+    </script>
+</template>

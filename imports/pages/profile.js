@@ -24,9 +24,10 @@ Template.profile.events({
         event.preventDefault();
 
         const target = event.target;
-        let text = target.devid.value;
+        let devID = target.devid.value;
+        let devLoc = target.devLoc.value;
 
-        Meteor.call("DeviceData.register",text);
+        Meteor.call("DeviceData.register",devID, devLoc);
 
         target.devid.value = "";
     }

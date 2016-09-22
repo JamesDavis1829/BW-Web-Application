@@ -19,8 +19,12 @@
                     <h3 class="text-center">Register a Device to your Profile</h3>
                     <p>To register a device to your profile you must provide the device ID and the location at which the device will be placed.</p>
                     <div class="form-group">
-                        <label for="InputNewUsername">Enter your Device ID:</label>
-                        <input type="text" class="form-control" placeholder="Enter the new Device ID here" name="devid">
+                        <label for="InputNewDeviceID">Enter the Device's ID:</label>
+                        <input type="text" class="form-control" placeholder="Enter the new Device's ID here" name="devid">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputNewLocation">Enter the Device's Location:</label>
+                        <input type="text" class="form-control" placeholder="Enter the Device's Location here" name="devLoc">
                     </div>
                     <button type="submit" class="btn btn-default btn-block">Add Device</button>
                 </form>
@@ -30,6 +34,20 @@
             <div class="well">
                 <form class="createSubUser">
                     <h3 class="text-center">Create a Sub User</h3>
+                    <p>Sub users have access to the locations that you specify. All the devices at these locations are automatically updated to the sub user. Use this to share data with your customers</p>
+                    <div class="form-group">
+                        <label for="InputNewSubUserName">Enter the new SubUser's Username:</label>
+                        <input type="text" class="form-control" placeholder="Enter the new SubUser's Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputNewSubUserPassword">Enter the new SubUser's Password:</label>
+                        <input type="text" class="form-control" placeholder="Enter the new SubUser's Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputNewSubUserName">Re-enter the new SubUser's Password:</label>
+                        <input type="text" class="form-control" placeholder="Re-enter the SubUser's Password">
+                    </div>
+                    <button type="submit" class="btn btn-default btn-block">Add SubUser</button>
                 </form>
             </div>
         </div>

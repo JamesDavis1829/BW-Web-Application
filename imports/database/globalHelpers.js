@@ -2,7 +2,7 @@ import { Template } from "meteor/templating";
 import { DeviceData } from "./devicedata.js";
 import { getDistinct,getFullGasAmount } from "./dbcommands.js";
 
-const pages = [
+export const pages = [
     "Dashboard",
     "Locations",
     "Profile"

@@ -1,0 +1,15 @@
+<template name="deviceRow">
+    {{#let data=getDataFromDevice}}
+        <div class="row" style="height: 300px">
+            <div class="col-md-12 well" style="height : 100%">
+                <div class="col-md-4" style="height : 100%">
+                    <h2>Device ID: {{devId}}</h2>
+                </div>
+                <div class="col-md-8" style="height : 100%">
+                    <canvas id="{{location}}{{devId}}"></canvas>
+                    {{renderCanvas devId location data}}
+                </div>
+            </div>
+        </div>
+    {{/let}}
+</template>

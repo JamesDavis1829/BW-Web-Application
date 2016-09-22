@@ -6,6 +6,7 @@ import "../imports/database/userData.js";
 Accounts.onCreateUser(function(options, user) {
     user.profile = options.profile;
     user.registeredDevices = [];
+    user.deviceLocations = {};
     user.isAdmin = options.admin;
 
     return user;

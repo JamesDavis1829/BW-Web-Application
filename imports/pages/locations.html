@@ -24,13 +24,7 @@
             </div>
             {{#if cur}}
                 {{#each (getDevicesFromLocation cur)}}
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="well">
-                                <p>{{this}}</p>
-                            </div>
-                        </div>
-                    </div>
+                    {{> deviceRow devId=this location=cur}}
                 {{/each}}
             {{/if}}
         {{/let}}

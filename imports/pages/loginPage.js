@@ -50,8 +50,7 @@ Template.loginpage.events({
                 email : email,
                 password : pass1,
                 profile : {
-                    name : name,
-                    devices : []
+                    name : name
                 },
                 admin : true
             });

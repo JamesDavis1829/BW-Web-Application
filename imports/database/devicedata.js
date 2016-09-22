@@ -21,11 +21,18 @@ Meteor.methods({
     "getAdminStatus"(){
         return Meteor.users.find({ _id : { $eq : this.userId}}).isAdmin;
     },
-    "DeviceData.register"(id){
+    "DeviceData.register"(id, location){
         check(id, String);
-        Meteor.users.update({_id : this.userId},{ $addToSet : { registeredDevices : parseInt(id, 16) }});
+        check(location, String);
+        let devId = parseInt(id, 16);
+        let query = String("deviceLocations." + devId);
+        Meteor.users.update({_id: this.userId}, {$addToSet: {registeredDevices: devId}});
+        Meteor.users.update({_id: this.userId}, {$set: { query : location}});
     },
     "DeviceData.getRegisteredDevices"(){
         return Meteor.users.findOne({ _id : this.userId}).registeredDevices;
+    },
+    "DeviceData.getLocations"(){
+        return Meteor.users.findOne({ _id : this.userId}).deviceLocations;
     }
 });

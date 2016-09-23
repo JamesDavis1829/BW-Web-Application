@@ -10,7 +10,6 @@ Template.deviceRow.helpers({
     getDataFromDevice(){
         let id = Template.instance().data.devId;
         let arr = DeviceData.find({DeviceID : { $eq : id}},{sort : {TimeStamp : 1}, limit : 20}).fetch();
-        console.log(arr);
         return arr;
     },
     renderCanvas(dev, location, data){

@@ -19,7 +19,7 @@ if(Meteor.isServer){
 
 Meteor.methods({
     "getAdminStatus"(){
-        return Meteor.users.find({ _id : { $eq : this.userId}}).isAdmin;
+        return Meteor.users.findOne({ _id : { $eq : this.userId}}).isAdmin;
     },
     "DeviceData.register"(id, location){
         check(id, String);

@@ -1,4 +1,5 @@
 <template name="profile">
+    {{#let locations=getLocations}}
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="well">
@@ -13,6 +14,7 @@
                 </form>
             </div>
         </div>
+        {{#if getAdmin}}
         <div class="col-md-10 col-md-offset-1">
             <div class="well">
                 <form class="addDeviceToProfile">
@@ -22,10 +24,22 @@
                         <label for="InputNewDeviceID">Enter the Device's ID:</label>
                         <input type="text" class="form-control" placeholder="Enter the new Device's ID here" name="devid">
                     </div>
-                    <div class="form-group">
-                        <label for="InputNewLocation">Enter the Device's Location:</label>
-                        <input type="text" class="form-control" placeholder="Enter the Device's Location here" name="devLoc">
+                    <strong>Choose the location from below or select new location: </strong>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="locationRadio" class="toggleNewLocation">Enter a new Location</label>
                     </div>
+                    {{#if newLocation}}
+                        <div class="form-group">
+                            <label for="InputNewLocation">New Location:</label>
+                            <input type="text" class="form-control" placeholder="Enter the Device's Location here" name="devLoc">
+                        </div>
+                    {{else}}
+                        {{#each locations}}
+                            <div class="radio">
+                                <label><input type="radio" name="registerRadio" id="check{{this}}">{{this}}</label>
+                            </div>
+                        {{/each}}
+                    {{/if}}
                     <button type="submit" class="btn btn-default btn-block">Add Device</button>
                 </form>
             </div>
@@ -37,19 +51,27 @@
                     <p>Sub users have access to the locations that you specify. All the devices at these locations are automatically updated to the sub user. Use this to share data with your customers</p>
                     <div class="form-group">
                         <label for="InputNewSubUserName">Enter the new SubUser's Username:</label>
-                        <input type="text" class="form-control" placeholder="Enter the new SubUser's Username">
+                        <input type="text" class="form-control" placeholder="Enter the new SubUser's Username" name="suser">
                     </div>
                     <div class="form-group">
                         <label for="InputNewSubUserPassword">Enter the new SubUser's Password:</label>
-                        <input type="text" class="form-control" placeholder="Enter the new SubUser's Password">
+                        <input type="password" class="form-control" placeholder="Enter the new SubUser's Password" name="spass1">
                     </div>
                     <div class="form-group">
                         <label for="InputNewSubUserName">Re-enter the new SubUser's Password:</label>
-                        <input type="text" class="form-control" placeholder="Re-enter the SubUser's Password">
+                        <input type="password" class="form-control" placeholder="Re-enter the SubUser's Password" name="spass2">
                     </div>
+                    <strong>Choose the locations this user will be able to access:</strong>
+                    {{#each locations}}
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="userCheck" id="{{this}}">{{this}}</label>
+                        </div>
+                    {{/each}}
                     <button type="submit" class="btn btn-default btn-block">Add SubUser</button>
                 </form>
             </div>
         </div>
+        {{/if}}
     </div>
+    {{/let}}
 </template>

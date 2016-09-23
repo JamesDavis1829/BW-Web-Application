@@ -18,5 +18,7 @@ Meteor.methods({
         check(name, String);
 
         Meteor.users.update({ _id : id } , { $set : { profile : { name : name} } });
+    },
+    "userData.createNewUser"(options){
     }
 });

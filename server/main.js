@@ -5,8 +5,11 @@ import "../imports/database/userData.js";
 
 Accounts.onCreateUser(function(options, user) {
     user.profile = options.profile;
-    user.registeredDevices = [];
-    user.deviceLocations = {};
+    if(!options.isAdmin){
+        user.registeredDevices = options.registeredDevices;
+    }else{
+        user.registeredDevices = [];
+    }
     user.isAdmin = options.admin;
 
     return user;

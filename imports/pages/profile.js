@@ -75,6 +75,7 @@ Template.profile.events({
         let username = target.suser.value;
         let pass1 = target.spass1.value;
         let pass2 = target.spass2.value;
+        let email = target.semail.value;
 
         if(selectedLocs.length <= 0){
             console.log("Error not enough selected");
@@ -83,9 +84,16 @@ Template.profile.events({
         }else if(pass1 !== pass2 || pass1 === "" || pass2 === ""){
             console.log("passwords do not match or passwords not filled in")
         }else{
-            console.log(username);
-            console.log(pass1);
-            console.log(selectedLocs);
+            let options = {
+                username,
+                pass1,
+                selectedLocs,
+                email
+            };
+            Meteor.call("userData.createNewUser",options,function(err, data){
+                console.log(err);
+                console.log(data);
+            });
         }
     }
     ,

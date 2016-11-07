@@ -1,20 +1,23 @@
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from "meteor/accounts-base";
-import "../imports/database/devicedata.js";
 import "../imports/database/userData.js";
+import "../imports/database/devicedata.js";
 
 Accounts.onCreateUser(function(options, user) {
     user.profile = options.profile;
-    if(!options.isAdmin){
-        user.registeredDevices = options.registeredDevices;
+    if(!options.admin){
+        user.registeredDevices = [];
+        user.allowedLocations = options.selectedLocs;
+        user.parent = options.parent;
     }else{
         user.registeredDevices = [];
     }
     user.isAdmin = options.admin;
 
+    //user.particle = particleCreateCustomer(user.emails);
+
     return user;
 });
 
 Meteor.startup(() => {
-
+  // code to run on server at startup
 });

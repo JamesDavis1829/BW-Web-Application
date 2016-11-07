@@ -1,0 +1,85 @@
+<template name="deviceSetup">
+    {{#if (getPageState 0)}}
+        <div class="col-xs-10 col-xs-offset-1">
+            <div class="well">
+                <h1 class="text-center">Current Status: {{{getStatus}}}</h1>
+                <br>
+                <ol>
+                    <li>Press the Setup Button on your device and for 3 seconds. The device's light will start blinking blue.</li>
+                    <li>After the light is blinking blue go to your wifi settings and connect to the wifi network <strong>Photon-XXXX</strong></li>
+                    <li>If you are using a mobile phone or tablet turn off your mobile data</li>
+                    <li>Press the next button</li>
+                </ol>
+                <br>
+                <p class="text-center"><span><button class="btn btn-default" id="next">Next</button></span></p>
+            </div>
+        </div>
+    {{/if}}
+    {{#if (getPageState 1)}}
+        <div class="col-xs-10 col-xs-offset-1">
+            <div class="well">
+                <h1 class="text-center">Current Status: {{{getStatus}}}</h1>
+                <br>
+                {{#unless isDeviceID}}
+                    <p>Device ID Found! Your Device ID is: {{getDeviceID}}</p>
+                    <p>Please press next to find available networks</p>
+                {{else}}
+                    <p class="text-center"><button class="btn btn-default btn-block" id="getDeviceID">Start Device Setup</button></p>
+                {{/unless}}
+                <p class="text-center"><span><button class="btn btn-default" id="previous">Prev</button></span> <span><button class="btn btn-default" id="next">Next</button></span></p>
+            </div>
+        </div>
+    {{/if}}
+    {{#if (getPageState 2)}}
+        <div class="col-xs-10 col-xs-offset-1">
+            <div class="well">
+                <h1 class="text-center">Current Status: {{{getStatus}}}</h1>
+                <br>
+                {{#unless isNetworks}}
+                    <p>Select your Network SSID and Security Protocol. If you are unsure about the security protocol select WPA2 Mixed.</p>
+                    <form class="sendNetworkCreds">
+                        <div class="form-group">
+                            <label for="networks">Select Network:</label>
+                            <select class="form-control" id="networks">
+                                {{#each getNetworks}}
+                                    <option value="{{this.ssid}}">{{this.ssid}}</option>
+                                {{/each}}
+                            </select>
+                            <br>
+                            <label for="security">Select</label>
+                            <select class="form-control" id="security">
+                                <option value="none">None</option>
+                                <option value="wep_psk">WEP PSK</option>
+                                <option value="wep_shared">WEP Shared</option>
+                                <option value="wpa_tkip">WPA TKIP</option>
+                                <option value="wpa_aes">WPA AES</option>
+                                <option value="wpa2_tkip">WPA2 TKIP</option>
+                                <option value="wpa2_aes">WPA2 AES</option>
+                                <option value="wpa2_mixed">WPA2 Mixed</option>
+                            </select>
+                            <br>
+                            <label for="pass">Network Password:</label>
+                            <input type="password" class="form-control" id="pass">
+                            <br>
+                            <p class="text-center"><button type="submit" class="btn btn-primary">Send Network Credentials</button></p>
+                        </div>
+                    </form>
+                {{else}}
+                    <p class="text-center"><button class="btn btn-default btn-block" id="getNetworks">Get Networks</button></p>
+                {{/unless}}
+                <p class="text-center"><span><button class="btn btn-default" id="previous">Prev</button></span> <span><button class="btn btn-default" id="next">Next</button></span></p>
+            </div>
+        </div>
+    {{/if}}
+    {{#if (getPageState 3)}}
+        <div class="col-xs-10 col-xs-offset-1">
+            <div class="well">
+                <h1>Device Setup Complete!</h1>
+                <p>Ensure that your devices status light is slowly flashing blue. If it is not then please run reset your
+                device and then hold the setup button and run through the staps again.</p>
+                <p class="text-center"><span><button class="btn btn-default" id="previous">Prev</button></span></p>
+            </div>
+        </div>
+    {{/if}}
+
+</template>

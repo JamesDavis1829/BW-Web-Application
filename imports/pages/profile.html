@@ -19,11 +19,23 @@
             <div class="well">
                 <form class="addDeviceToProfile">
                     <h3 class="text-center">Register a Device to your Profile</h3>
-                    <p>To register a device to your profile you must provide the device ID and the location at which the device will be placed.</p>
-                    <div class="form-group">
-                        <label for="InputNewDeviceID">Enter the Device's ID:</label>
-                        <input type="text" class="form-control" placeholder="Enter the new Device's ID here" name="devid">
+                    <p>To register a device to your profile you must provide the Device ID and the location at which the device will be placed.</p>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="locationRadio" class="toggleUseSetup">Use Setup Device ID</label>
                     </div>
+                    {{#unless getUseSetup}}
+                        <div class="form-group">
+                            <label for="InputNewDeviceID">Enter the Device's ID or Select From Setup Devices:</label>
+                            <input type="text" class="form-control" placeholder="Enter the new Device's ID here" name="devid">
+                        </div>
+                    {{/unless}}
+                    {{#if getUseSetup}}
+                        {{#each getPastDevices}}
+                            <div class="radio">
+                                <label><input type="radio" name="registerDev" id="check{{this}}">{{this}}</label>
+                            </div>
+                        {{/each}}
+                    {{/if}}
                     <strong>Choose the location from below or select new location: </strong>
                     <div class="checkbox">
                         <label><input type="checkbox" name="locationRadio" class="toggleNewLocation">Enter a new Location</label>
@@ -40,12 +52,15 @@
                             </div>
                         {{/each}}
                     {{/if}}
+                    {{#unless isError}}
+                        <div class="alert alert-danger" role="alert"><strong>Error:</strong> {{getError}}</div>
+                    {{/unless}}
                     <button type="submit" class="btn btn-default btn-block">Add Device</button>
                 </form>
             </div>
         </div>
         <div class="col-md-10 col-md-offset-1">
-            <div class="well">
+            <div class="well" id="subUser">
                 <form class="createSubUser">
                     <h3 class="text-center">Create a Sub User</h3>
                     <p>Sub users have access to the locations that you specify. All the devices at these locations are automatically updated to the sub user. Use this to share data with your customers</p>
@@ -72,6 +87,9 @@
                         </div>
                     {{/each}}
                     <button type="submit" class="btn btn-default btn-block">Add SubUser</button>
+                    {{#unless isSubError}}
+                        <div class="alert alert-danger" role="alert"><strong>Error:</strong> {{getSubError}}</div>
+                    {{/unless}}
                 </form>
             </div>
         </div>

@@ -1,37 +1,96 @@
-<template name="dashboardRow">
+<!--<template name="dashboardRow">
     {{#each location}}
         <div class="row" style="height : 110px">
-            <div class="col-md-12 well" style="height : 100%">
-                <div class="col-md-3">
-                    <h2 class="locationLink" id="{{this}}">{{this}}</h2>
+            <div class="col-xs-12 well" style="height : 100%">
+                <div class="col-xs-4">
+                    <h2 class="locationLink" id="{{this}}" style="word-wrap: break-word"><a href="/locations/{{encode this}}">{{this}}</a></h2>
                 </div>
                 {{#let tanks=(getTanksTotals this)}}
-                    <div class="col-md-3" style="height : 100%">
+                    <div class="col-xs-3" style="height : 100%">
                         {{> doughnutChart location=this data=tanks}}
                     </div>
-                    <div id="table" class="col-md-6" style="height : 100%">
+                    <div id="table" class="col-xs-5" style="height : 100%">
                         {{> dashTable data=tanks}}
                     </div>
                 {{/let}}
             </div>
         </div>
     {{/each}}
+</template>-->
+<template name="dashboardRow">
+  {{#each location}}
+    {{#let tanks=(getTanksTotals this)}}
+      <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="locationLink" id="{{this}}" style="text-align:center"><a href="/locations/{{encode this}}">{{this}}</a></h3></div>
+        <div class="panel-body">
+          {{#if isWide}}
+            <div class="row" style="height:90px">
+              <div class="col-xs-6" style="height:100%">
+                {{> doughnutChart location=this data=tanks}}
+              </div>
+              <div class="col-xs-6" style="height:100%">
+                {{> dashTable data=tanks}}
+              </div>
+            </div>
+          {{else}}
+            <div class="row" style="height:90px">
+              <div class="col-xs-4" style="height:100%">
+                {{> doughnutChart location=this data=tanks}}
+              </div>
+              <div class="col-xs-8" style="height:100%">
+                {{> dashTable data=tanks}}
+              </div>
+            </div>
+          {{/if}}
+        </div>
+      </div>
+    {{/let}}
+  {{/each}}
 </template>
 
 <template name="dashboardRowSingle">
+  {{#let tanks=(getTanksTotals location)}}
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3 style="text-align:center">{{location}}</h3></div>
+      <div class="panel-body">
+        {{#if isWide}}
+          <div class="row" style="height:90px">
+            <div class="col-xs-6" style="height:100%">
+              {{> doughnutChart location=location data=tanks}}
+            </div>
+            <div class="col-xs-6" style="height:100%">
+              {{> dashTable data=tanks}}
+            </div>
+          </div>
+        {{else}}
+          <div class="row" style="height:90px">
+            <div class="col-xs-4" style="height:100%">
+              {{> doughnutChart location=location data=tanks}}
+            </div>
+            <div class="col-xs-8" style="height:100%">
+              {{> dashTable data=tanks}}
+            </div>
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  {{/let}}
+</template>
+
+<!--<template name="dashboardRowSingle">
     <div class="row" style="height : 110px">
-        <div class="col-md-12 well" style="height : 100%">
-            <div class="col-md-3">
-                <h2>{{location}}</h2>
+        <div class="col-xs-12 well" style="height : 100%">
+            <div class="col-xs-4">
+                <h2 style="word-wrap: break-word">{{location}}</h2>
             </div>
             {{#let tanks=(getTanksTotals location)}}
-                <div class="col-md-3" style="height : 100%">
+                <div class="col-xs-3" style="height : 100%">
                     {{> doughnutChart location=location data=tanks}}
                 </div>
-                <div id="table" class="col-md-6" style="height : 100%">
+                <div id="table" class="col-xs-5" style="height : 100%">
                     {{> dashTable data=tanks}}
                 </div>
             {{/let}}
         </div>
     </div>
-</template>
+</template>-->

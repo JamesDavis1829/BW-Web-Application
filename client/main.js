@@ -1,4 +1,4 @@
-import "../imports/database/globalHelpers.js";
-import "../imports/pages/body.js";
+import "../imports/config/router.js";
 import "../imports/database/devicedata.js";
 import "../imports/database/userData.js";
+import "../imports/database/globalHelpers.js";

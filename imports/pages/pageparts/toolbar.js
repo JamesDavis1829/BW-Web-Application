@@ -8,6 +8,10 @@ Template.toolbar.helpers({
         if(Meteor.userId() !== null) {
             return Meteor.user().username;
         }
+    },
+    getLocationName(name){
+        name = name.replace(/\s+/g, '');
+        return name.toLowerCase();
     }
 });
 

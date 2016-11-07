@@ -1,7 +1,6 @@
 import { Meteor } from "meteor/meteor";
 
 function addProfile(){
-    console.log("Here");
     Meteor.user().profile.name = "name not set";
 }
 

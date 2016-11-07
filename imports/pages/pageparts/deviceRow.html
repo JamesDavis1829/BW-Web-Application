@@ -1,12 +1,16 @@
 <template name="deviceRow">
     {{#let data=getDataFromDevice}}
         <div class="row" style="height: 300px">
-            <div class="col-md-12 well" style="height : 100%">
-                <div class="col-md-4" style="height : 100%">
-                    <h2>Device ID: {{devId}}</h2>
+            <div class="col-xs-12 well" style="height : 100%">
+                <div class="col-xs-4" style="height : 100%">
+                    <h4 style="word-wrap : break-word"><b>Device ID: {{devId}}</b></h4>
+                    <h4>Last PSI Reading: {{readingPressure data}}</h4>
+                    {{#if (checkGasType data)}}
+                        <h4>Liters Remaining : {{readingLiters data}}</h4>
+                    {{/if}}
+                    <h4>Gas Type : {{readingGasType data}}</h4>
                 </div>
-                <div class="col-md-8" style="height : 100%">
-                    <canvas id="{{location}}{{devId}}"></canvas>
+                <div id="{{location}}{{devId}}" class="col-xs-8" style="height : 100%">
                     {{renderCanvas devId location data}}
                 </div>
             </div>

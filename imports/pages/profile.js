@@ -7,6 +7,9 @@ import "./profile.html";
 
 Template.profile.onCreated(function profileCreated(){
     this.newLocation = new ReactiveVar(false);
+    this.useSetup = new ReactiveVar(false);
+    this.error = new ReactiveVar("");
+    this.subError = new ReactiveVar("");
     Session.set("admin", false);
     Meteor.call("getAdminStatus", function(err, data){
         Session.set("admin",data);
@@ -16,13 +19,37 @@ Template.profile.onCreated(function profileCreated(){
 Template.profile.helpers({
     getAdmin(){
         return Session.get("admin");
-    }
-    ,
+    },
     getname(){
         return Meteor.user().profile.name;
     },
     newLocation(){
         return Template.instance().newLocation.get();
+    },
+    getUseSetup(){
+      return Template.instance().useSetup.get();
+    },
+    getError(){
+      return Template.instance().error.get();
+    },
+    getPastDevices(){
+        if(Session.get("devices") === undefined){
+            return ["No Devices Previously Setup"]
+        }else{
+            return Session.get("devices");
+        }
+    },
+    getSubError(){
+      return Temaplate.instance().subError.get();
+    },
+    isPastDevices(){
+        return Session.get("devices") === undefined;
+    },
+    isError(){
+        return Template.instance().error.get() === "";
+    },
+    isSubError(){
+        return Template.instance().subError.get() === "";
     }
 });
 
@@ -41,7 +68,15 @@ Template.profile.events({
         event.preventDefault();
 
         const target = event.target;
-        let devID = target.devid.value;
+        let devID = null;
+        if(instance.useSetup.get()){
+            let radios = $("[name=registerDev]:radio:checked");
+            if(radios[0] !== undefined){
+                devID = radios[0].id.substring(5);
+            }
+        }else{
+            devID = target.devid.value;
+        }
         let devLoc = null;
         if(!instance.newLocation.get()) {
             let radios = $("[name=registerRadio]:radio:checked");
@@ -53,12 +88,15 @@ Template.profile.events({
         }
 
         if(devLoc !== null && devLoc !== ""){
-            Meteor.call("DeviceData.register",devID,devLoc);
+            if(devID === "No Devices Previously Setup"){
+                instance.error.set("error: " + devID + " not an acceptable value")
+            }else{
+                Meteor.call("DeviceData.register",devID,devLoc);
+                location.reload();
+            }
         }else{
-            console.log("error: " + devLoc + " not an accepted value");
+            instance.error.set("error: " + devLoc + " not an accepted value");
         }
-
-        target.devid.value = "";
     },
     "submit .createSubUser"(event, instance){
         event.preventDefault();
@@ -78,11 +116,11 @@ Template.profile.events({
         let email = target.semail.value;
 
         if(selectedLocs.length <= 0){
-            console.log("Error not enough selected");
+            instance.subError.set("Error not enough selected");
         }else if(username === ""){
-            console.log("username not valid")
+            instance.subError.set("username not valid");
         }else if(pass1 !== pass2 || pass1 === "" || pass2 === ""){
-            console.log("passwords do not match or passwords not filled in")
+            instance.subError.set("passwords do not match or passwords not filled in");
         }else{
             let options = {
                 username,
@@ -91,13 +129,23 @@ Template.profile.events({
                 email
             };
             Meteor.call("userData.createNewUser",options,function(err, data){
-                console.log(err);
-                console.log(data);
+                username = "";
+                pass1 = "";
+                pass2 = "";
+                email = "";
+                if(err){
+                    $("#subUser").append("<p>Unable to create SubUser</p>");
+                } else {
+                    $("#subUser").append("<p>Creates SubUser successfully</p>");
+                }
             });
         }
-    }
-    ,
+    },
     "click .toggleNewLocation"(event, instance){
         instance.newLocation.set(!instance.newLocation.get());
+    },
+    "click .toggleUseSetup"(event, instance){
+        instance.useSetup.set(!instance.useSetup.get());
     }
+
 });
